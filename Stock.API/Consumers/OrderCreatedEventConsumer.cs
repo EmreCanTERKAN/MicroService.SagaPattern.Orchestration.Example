@@ -21,7 +21,7 @@ namespace Stock.API.Consumers
             foreach (var orderItem in context.Message.OrderItems)
             {
                 //FindAsync kullanırken MongoDriver frameworkunde olan metodu kullanmamız gerekiyor.
-               stockResults.Add( await (await stockCollection.FindAsync(s => s.ProductId == orderItem.ProductId && s.Count >= orderItem.Count)).AnyAsync());
+               stockResults.Add( await (await stockCollection.FindAsync(s => s.ProductId == orderItem.ProductId && s.Count >= (long)orderItem.Count)).AnyAsync());
             }
             // Eğer ki true olmaz ise geriye bir stocknotreserved eventi publish etmemiz gerekmektedir.
             //Burada stockResult içerisindeki bütün değerlerin true olup olmadığını değerlendiriyoruz.

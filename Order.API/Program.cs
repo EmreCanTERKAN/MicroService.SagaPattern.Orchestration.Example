@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Order.API.Consumers;
 using Order.API.Context;
 using Order.API.Models;
 using Order.API.ViewModels;
@@ -13,9 +14,17 @@ builder.Services.AddSwaggerGen();
 // MassTransit Konfigürasyonu ayarlarý
 builder.Services.AddMassTransit(configurator =>
 {
+    configurator.AddConsumer<OrderCompletedEventConsumer>();
+    configurator.AddConsumer<OrderFailedEventConsumer>();
+
     configurator.UsingRabbitMq((context, _configure) =>
     {
         _configure.Host(builder.Configuration["RabbitMQ"]);
+
+        //Consumerlarýn endpointin tanýmlýyoruz.
+        _configure.ReceiveEndpoint(RabbitMQSettings.Order_OrderCompletedEventQueue, e => e.ConfigureConsumer<OrderCompletedEventConsumer>(context));
+        _configure.ReceiveEndpoint(RabbitMQSettings.Order_OrderFailedEventQueue, e => e.ConfigureConsumer<OrderFailedEventConsumer>(context));
+
     });
 });
 
