@@ -109,7 +109,7 @@ namespace SagaStateMachine.Service.StateMachines
             During(OrderCreated,
                 When(StockReservedEvent)
                 .TransitionTo(StockReserved)
-                .Send(new Uri($"queue:{RabbitMQSettings.Payment_StartedEventQueue}"),
+                .Send(new Uri($"queue:{RabbitMQSettings.Payment_PaymentStartedEventQueue}"),
                 context => new PaymentStartedEvent(context.Saga.CorrelationId)
                 {
                     TotalPrice = context.Saga.TotalPrice,
