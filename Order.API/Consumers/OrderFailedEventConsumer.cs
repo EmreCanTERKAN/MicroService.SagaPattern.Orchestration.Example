@@ -11,7 +11,7 @@ namespace Order.API.Consumers
             Models.Order order = await orderDbContext.Orders.FindAsync(context.Message.OrderId);
             if (order is not null)
             {
-                order.OrderStatu = Enums.OrderStatus.Completed;
+                order.OrderStatu = Enums.OrderStatus.Failed;
                 await orderDbContext.SaveChangesAsync();
             }
         }

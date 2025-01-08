@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using SagaStateMachine.Service.StateInstances;
+using SagaStateMachine.Service.StateInstances; 
 using Shared.Messages;
 using Shared.OrderEvents;
 using Shared.PaymentEvents;
@@ -104,7 +104,7 @@ namespace SagaStateMachine.Service.StateMachines
                 {
                     OrderItems = context.Message.OrderItems,
                 }));
-            //Eğerki veri tabanında ilgili siparişin state'i OrderCreated ise ve gelen event stockereserve se stateini stock reservend demiş olduk. benzer mantık la stocknotreservedevent geldiğinde stateini stocknotreserved çekiyoruz.
+            //Eğerki veri tabanında ilgili siparişin state'i OrderCreated ise ve gelen event stockereserve se stateini stock reservend demiş olduk. benzer mantıkla stocknotreservedevent geldiğinde stateini stocknotreserved çekiyoruz.
 
             During(OrderCreated,
                 When(StockReservedEvent)
