@@ -3,10 +3,10 @@ name: CI/CD for Microservices
 on:
   push:
     branches:
-      - main  # Main branch'e push yapıldığında çalıştır
+      - "*" # Main branch'e push yapıldığında çalıştır
   pull_request:
     branches:
-      - main  # PR açıldığında da çalıştır
+      - "*"  # PR açıldığında da çalıştır
 
 jobs:
   build-and-test:
