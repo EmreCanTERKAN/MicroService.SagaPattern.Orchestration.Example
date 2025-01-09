@@ -1,0 +1,31 @@
+name: CI/CD for Microservices
+
+on:
+  push:
+    branches:
+      - main  # Main branch'e push yapıldığında çalıştır
+  pull_request:
+    branches:
+      - main  # PR açıldığında da çalıştır
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'  # Projende kullandığın .NET versiyonu
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build Solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test --no-build --verbosity normal
